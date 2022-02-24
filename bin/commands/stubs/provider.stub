@@ -1,0 +1,118 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Support\Carbon;
+use Ions\Bundles\QueryBuilder;
+use Ions\Foundation\ProviderController;
+use Ions\Support\Arr;
+use Ions\Support\DB;
+use JetBrains\PhpStorm\Pure;
+use stdClass;
+use Throwable;
+
+class {{ class }} extends ProviderController
+{
+    private static string $tbl = '{{ table }}';
+    private static array $tbl_columns = [{{ columns }}];
+
+    #[Pure] private static function validRules($type): array
+    {
+        $rules = [
+            'title' => 'required',
+            'id' => 'required|numeric|not_in:0|exists:' . static::$tbl . ',id'
+        ];
+        return match ($type) {
+            'store' => Arr::only($rules, ['title']),
+            'update' => Arr::only($rules, ['title', 'id']),
+            'single', 'delete' => Arr::only($rules, ['id']),
+            default => $rules,
+        };
+    }
+
+    public static function store(stdClass $param): static
+    {
+        $valid = validate($param, static::validRules('store'));
+        if (!empty($valid)) {
+            self::badRequest($valid);
+            return new self();
+        }
+
+        try {
+            DB::table('roles')->insert([
+                'title' => $param->title,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+            self::createdResponse(['response' => trans('create_success',[],'provider')]);
+        } catch (Throwable $exception) {
+            self::serverError($exception->getMessage());
+        }
+
+        return new self();
+    }
+
+    public static function single($param): static
+    {
+        $valid = validate(['id' => $param], static::validRules('single'));
+        if (!empty($valid)) {
+            self::badRequest($valid);
+            return new self();
+        }
+
+        $item = DB::table(static::$tbl)->find($param);
+        self::successResponse($item);
+
+        return new self();
+    }
+
+    public static function show(): static
+    {
+        $pre_items = DB::table(static::$tbl);
+        $fields = static::$tbl_columns;
+        $items = new QueryBuilder($pre_items, $fields);
+        [$data, $total] = $items->toResponse();
+        $paging = ['total' => $total, 'limit' => $items->count, 'offset' => $items->offset];
+        self::successResponse(array_merge($paging, ['items' => $data]));
+        return new self();
+    }
+
+    public static function update(stdClass $param): static
+    {
+        $valid = validate($param, static::validRules('update'));
+        if (!empty($valid)) {
+            self::badRequest($valid);
+            return new self();
+        }
+
+        try {
+            DB::table(static::$tbl)
+                ->where('id', $param->id)->update([
+                    'title' => $param->title,
+                    'updated_at' => Carbon::now()
+                ]);
+            self::updatedResponse(['response' => trans('update_success',[],'provider')]);
+        } catch (Throwable $exception) {
+            self::serverError($exception->getMessage());
+        }
+
+        return new self();
+    }
+
+    public static function delete($param): static
+    {
+        $valid = validate(['id' => $param], static::validRules('delete'));
+        if (!empty($valid)) {
+            self::badRequest($valid);
+            return new self();
+        }
+
+        try {
+            DB::table(static::$tbl)->where('id', $param)->delete();
+            self::deletedResponse(['response' => trans('delete_success',[],'provider')]);
+        } catch (Throwable $exception) {
+            self::serverError($exception->getMessage());
+        }
+        return new self();
+    }
+}

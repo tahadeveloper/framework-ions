@@ -1,0 +1,22 @@
+<IfModule mod_rewrite.c>
+
+    <Files ~ "(webpack.mix.js|README.md|composer.lock)">
+        order allow,deny
+        Deny from all
+    </Files>
+
+    <Files .*>
+    Order Deny,Allow
+    Deny from All
+    </Files>
+
+    <Files *.json>
+        Order Deny,Allow
+        Deny from All
+    </Files>
+
+    RewriteEngine On
+    RewriteRule ^(.*)$ app.php [L]
+</IfModule>
+
+ErrorDocument 403 /dev/var/templates/Exception/error.html.php

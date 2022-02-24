@@ -1,0 +1,5 @@
+fundamental:
+  path: /v1/base/{type}
+  controller: v1\Api::base
+  methods: get|post
+

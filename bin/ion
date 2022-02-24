@@ -1,0 +1,44 @@
+#!/usr/bin/env php
+<?php
+
+use Illuminate\Foundation\Console\RouteListCommand;
+use Ions\Foundation\Kernel;
+use Illuminate\Console\Application;
+use Illuminate\Events\Dispatcher;
+use Ions\Foundation\RegisterDB;
+
+require __DIR__ . '/../vendor/autoload.php';
+
+
+Kernel::boot();
+config()?->set('app.database_engine',['db']);
+RegisterDB::boot();
+$container = Kernel::app();
+$events = new Dispatcher($container);
+
+$ion = new Application($container, $events, 'Version 2');
+$ion->setName('Ions Console');
+
+try {
+    // Bind a command
+    $ion->resolve(SeederCommand::class);
+    $ion->resolve(ModelCommand::class);
+    $ion->resolve(SchemaCommand::class);
+    $ion->resolve(ProviderCommand::class);
+
+    $ion->resolve(DumpCommand::class);
+    $ion->resolve(MigrateCommand::class);
+    $ion->resolve(RollBackCommand::class);
+
+    $ion->resolve(KeyCommand::class);
+    $ion->resolve(ControllerCommand::class);
+    $ion->resolve(SuperCommand::class);
+
+    $ion->resolve(RouteListCommand::class);
+
+    $ion->run();
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
+
+

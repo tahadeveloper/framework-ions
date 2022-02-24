@@ -1,0 +1,3 @@
+use {{ namespace }};
+
+class Api extends ApiController
