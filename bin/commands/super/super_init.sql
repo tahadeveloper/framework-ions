@@ -8,6 +8,9 @@ INSERT INTO `controls`
 VALUES (4, 2, 'role', 1, 'role', '', 'role', 0, '2021-07-08 17:53:06', '2022-02-07 09:00:29');
 INSERT INTO `controls`
 VALUES (5, NULL, 'user', 1, 'user', 'bi bi-people', 'user', 0, '2021-07-08 18:03:05', '2022-02-07 09:01:25');
+INSERT INTO `controls`
+VALUES (6, NULL, 'profile', 0, 'profile', '', 'profile', 4, '2022-02-25 09:49:25', '2022-02-25 09:55:32');
+
 
 INSERT INTO `controls_languages`
 VALUES (1, 1, 'ar', 'لوحة الرئيسية', '2021-07-08 17:42:15', '2022-02-07 08:58:44');
@@ -29,6 +32,10 @@ INSERT INTO `controls_languages`
 VALUES (9, 5, 'ar', 'المستخدمين', '2021-07-08 18:03:05', '2022-02-07 09:01:25');
 INSERT INTO `controls_languages`
 VALUES (10, 5, 'en', 'Users', '2021-07-08 18:03:05', '2022-02-07 09:01:25');
+INSERT INTO `controls_languages`
+VALUES (11, 6, 'ar', 'الملف الشخصي', '2022-02-25 09:49:25', '2022-02-25 09:55:32');
+INSERT INTO `controls_languages`
+VALUES (12, 6, 'en', 'Profile', '2022-02-25 09:49:25', '2022-02-25 09:55:32');
 
 INSERT INTO `actions`
 VALUES (1, 'index', 0, 3, '2021-07-08 17:49:35', '2022-02-07 08:56:59');

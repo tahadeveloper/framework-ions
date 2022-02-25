@@ -16,6 +16,10 @@ interface BluePrint
      */
     public function _initState(Request $request):void;
 
+    public function _loadInit(Request $request):void;
+
+    public function _loadedState(Request $request):void;
+
     /**
      * call before closing request
      * @param Request $request

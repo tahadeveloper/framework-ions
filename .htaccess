@@ -10,13 +10,9 @@
     Deny from All
     </Files>
 
-    <Files *.json>
-        Order Deny,Allow
-        Deny from All
-    </Files>
-
     RewriteEngine On
+    RewriteRule ^(views)($|/) - [L]
     RewriteRule ^(.*)$ app.php [L]
 </IfModule>
 
-ErrorDocument 403 /dev/var/templates/Exception/error.html.php
+ErrorDocument 403 /framework-ions/var/templates/Exception/error.html.php

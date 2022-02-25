@@ -69,13 +69,13 @@ trait Twig
      */
     private function options(Environment $environment): void
     {
-        $environment->addFunction(new TwigFunction('config', fn() => config()));
+        $environment->addFunction(new TwigFunction('config', fn($key = null) => config($key)));
         $environment->addFunction(new TwigFunction('trans',
             fn(string|null $key = '', array $replace = [], string|null $domain = null, string|null $locale = null) => trans($key, $replace, $domain, $locale)));
-        $environment->addFunction(new TwigFunction('assets', fn(string $url) => Path::assets($url)));
+        $environment->addFunction(new TwigFunction('assets', fn(string $url,string $folder = 'default') => Path::assets($url,$folder)));
         $environment->addFunction(new TwigFunction('public', fn(string $url) => Path::public($url,true)));
         $environment->addFunction(new TwigFunction('files', fn(string $url) => Path::files($url, true)));
-        $environment->addFunction(new TwigFunction('appUrl', fn(string $url = '') => Path::rootFolder($url, 'src')));
+        $environment->addFunction(new TwigFunction('appUrl', fn(string $url = '',string $folder = null) => Path::rootFolder($url, $folder)));
         $environment->addFunction(new TwigFunction('ionToken',
             fn(string $form_name) => new Markup(ionToken($form_name), 'UTF-8')));
         $environment->addGlobal('appUrl', config('app.app_url'));

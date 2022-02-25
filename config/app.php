@@ -16,7 +16,7 @@ return [
     | database project engine support ['db', 'redbean']
     |--------------------------------------------------------------------------
     */
-    'database_engine' => [],
+    'database_engine' => ['db'],
     /*
     |--------------------------------------------------------------------------
     | templates project support ['twig','smarty']
@@ -33,7 +33,7 @@ return [
         'source' => Path::views($twig_theme),
         'cache' => Path::cache('twig'),
         'paths' => [
-            'admin'
+            'super'
         ]
     ],
     /*
@@ -47,9 +47,7 @@ return [
         'compile' => Path::cache('smarty/compile'),
         'cache' => Path::cache('smarty/cache'),
         'config' => Path::config('smarty.php'),
-        'paths' => [
-            'admin'
-        ]
+        'paths' => []
     ],
     /*
     |--------------------------------------------------------------------------

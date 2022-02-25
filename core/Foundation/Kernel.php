@@ -312,6 +312,7 @@ class Kernel extends Singleton
             $instance = new $controller();
             !method_exists($instance, '_initState') ?: $instance->_initState(static::$request);
             !method_exists($instance, '_loadInit') ?: $instance->_loadInit(static::$request);
+            !method_exists($instance, '_loadedState') ?: $instance->_loadedState(static::$request);
             if (method_exists($instance, 'callAction')) {
                 $instance->callAction($method, [static::$request]);
             }else if(method_exists($instance, $method)){

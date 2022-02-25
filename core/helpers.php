@@ -286,6 +286,6 @@ if (!function_exists('appGetLocale')) {
      */
     function appGetLocale():string|null
     {
-        return config('app.localization.locale.');
+        return config('app.localization.locale');
     }
 }

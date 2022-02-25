@@ -28,7 +28,7 @@ abstract class BaseController implements BluePrint
         // Implement _initState() method.
     }
 
-    public function _loadInit(): void
+    public function _loadInit(Request $request): void
     {
         $config_locale = config('app.localization.locale',$this->locale);
         Localization::init($this->locale_folder, $config_locale);
@@ -44,6 +44,11 @@ abstract class BaseController implements BluePrint
             $this->smartyInit();
             !$trans_json ?: $this->smarty->assignGlobal('tJson', $trans_json);
         }
+    }
+
+    public function _loadedState(Request $request): void
+    {
+        // Implement _loadedState() method.
     }
 
     public function _endState(Request $request): void

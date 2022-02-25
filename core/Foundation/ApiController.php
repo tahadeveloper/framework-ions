@@ -61,10 +61,15 @@ abstract class ApiController implements BluePrint
         // Implement _initState() method.
     }
 
-    public function _loadInit(): void
+    public function _loadInit(Request $request): void
     {
         $config_locale = config('app.localization.locale',$this->locale);
         Localization::init($this->locale_folder, $config_locale);
+    }
+
+    public function _loadedState(Request $request): void
+    {
+        // Implement _loadedState() method.
     }
 
     public function _endState(Request $request): void

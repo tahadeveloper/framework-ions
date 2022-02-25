@@ -88,7 +88,7 @@ class Redirect
      */
     #[NoReturn] public static function internal(string $path, int $status = 302, array $headers = []):void
     {
-        self::createRedirect(appUrl().'/'.$path, $status, $headers)->send();
+        self::createRedirect(appUrl().DIRECTORY_SEPARATOR.$path, $status, $headers)->send();
         exit();
     }
 
