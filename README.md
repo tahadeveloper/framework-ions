@@ -31,8 +31,17 @@ To deploy this project run
 Install my-project with npm
 
 ```bash
-  npm install my-project
-  cd my-project
+    Git last version from ions 3
+    Command: create key
+    Command: create jwt
+    create database
+    Modify env.ion
+    choose route file
+    Install super panel - command
+    install migration table - command
+    choose lang files
+    change in config file in app/config
+    start do what you want
 ```
 
 ![Logo](https://ionzile.com/web/Views/default/_assets/public/img/logo.png)
