@@ -1,6 +1,5 @@
 <?php
 
-use Ions\Bundles\Localization;
 use Ions\Foundation\Kernel;
 
 /*

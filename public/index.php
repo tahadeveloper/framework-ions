@@ -1,6 +1,5 @@
 <?php
 
-use Ions\Foundation\RegisterDB;
 use Ions\Foundation\Kernel;
 
 /*
