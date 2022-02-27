@@ -1,13 +1,13 @@
 <?php
 
-namespace API\v1;
+namespace API\stage1;
 
 use App\Providers\Lib\Fundamental;
 use Ions\Foundation\ApiController;
 use Ions\Support\Request;
 use JetBrains\PhpStorm\NoReturn;
 
-class Api extends ApiController
+class Services extends ApiController
 {
     #[NoReturn] public function base(Request $request): void
     {

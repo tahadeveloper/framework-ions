@@ -2,6 +2,8 @@
 
 namespace Ions\Foundation;
 
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Routing\Exception\NoConfigurationException;
 use const EXTR_SKIP;
 use Ions\Support\Request;
 use Ions\Support\Response;
@@ -255,6 +257,18 @@ class Kernel extends Singleton
     }
 
     /**
+     * @param array $context
+     * @return string
+     */
+    private static function HtmlErrorRender(array $context = []): string
+    {
+        extract($context, EXTR_SKIP);
+        ob_start();
+        include Path::var('templates/Exception/error.html.php');
+        return trim(ob_get_clean());
+    }
+
+    /**
      * Run app by route it with controller and method
      *
      * @param string $target_folder
@@ -264,7 +278,6 @@ class Kernel extends Singleton
     public static function make(string $target_folder, string $namespace = ''): void
     {
         $target_folder === 'api' ? static::errorDebugApi() : static::errorDebug();
-
         try {
             $routes = static::captureRoute($target_folder);
             $context = new RequestContext();
@@ -281,53 +294,18 @@ class Kernel extends Singleton
 
             static::$response->setVary(['Accept-Encoding', 'gzip, compress, br']);
             static::$response->setVary(['Content-Encoding', 'br']);
+            list($controller, $method) = self::handleRouteRequest($matcher_params, $namespace);
 
-            // action -> as text : NameController::action
-            $ex_controller_method = explode('::', $matcher_params['_controller']);
-
-            $controller = $ex_controller_method[0] ?? $matcher_params['_controller'];
-            $method = $ex_controller_method[1] ?? $matcher_params['method'];
-
-            static::config()->set('app._method', $method);
-
-            // remove id from parameters when 0 value
-            $matcher_params = Arr::where($matcher_params, static function ($value, $key) {
-                return !($key === 'id' && $value === 0);
-            });
-
-            // add matcher to request parameters
-            static::$request->attributes->add($matcher_params);
-
-            // secure app, accept request from app_url
-            if (static::$request->getSchemeAndHttpHost() . env('APP_FOLDER') !== env('APP_URL')) {
-                throw new EncryptException('App host does not exist!.');
-            }
-
-            // add namespace to controller if didn't have
-            if ($namespace && $controller !== 'App\Schedule' && !Str::contains($controller, $namespace)) {
-                $controller = $namespace . $controller;
-            }
-
-            // instance the controller
-            $instance = new $controller();
-            !method_exists($instance, '_initState') ?: $instance->_initState(static::$request);
-            !method_exists($instance, '_loadInit') ?: $instance->_loadInit(static::$request);
-            !method_exists($instance, '_loadedState') ?: $instance->_loadedState(static::$request);
-            if (method_exists($instance, 'callAction')) {
-                $instance->callAction($method, [static::$request]);
-            }else if(method_exists($instance, $method)){
-                $instance->{$method}(...array_values([static::$request]));
-            }
-            !method_exists($instance, '_endState') ?: $instance->_endState(static::$request);
+            self::instanceTheController($controller, $method);
 
             static::$response->setPublic();
             static::$response->setMaxAge(3600);
             static::$response->headers->addCacheControlDirective('must-revalidate', true);
             static::$response->send();
 
-        } catch (ResourceNotFoundException $e) {
+        } catch (Throwable) {
             if ($namespace === 'API\\') {
-                static::$response->setContent(['error' => $e->getMessage()]);
+                static::$response->setContent(['error' => 'Page route not found']);
             } else {
                 static::$response->setContent(static::HtmlErrorRender([
                     'statusText' => 'Page route not found',
@@ -375,15 +353,58 @@ class Kernel extends Singleton
     }
 
     /**
-     * @param array $context
-     * @return string
+     * @param mixed $controller
+     * @param mixed $method
+     * @return void
      */
-    private static function HtmlErrorRender(array $context = []): string
+    private static function instanceTheController(mixed $controller, mixed $method): void
     {
-        extract($context, EXTR_SKIP);
-        ob_start();
-        include Path::var('templates/Exception/error.html.php');
-        return trim(ob_get_clean());
+// instance the controller
+        $instance = new $controller();
+        !method_exists($instance, '_initState') ?: $instance->_initState(static::$request);
+        !method_exists($instance, '_loadInit') ?: $instance->_loadInit(static::$request);
+        !method_exists($instance, '_loadedState') ?: $instance->_loadedState(static::$request);
+        if (method_exists($instance, 'callAction')) {
+            $instance->callAction($method, [static::$request]);
+        } else if (method_exists($instance, $method)) {
+            $instance->{$method}(...array_values([static::$request]));
+        }
+        !method_exists($instance, '_endState') ?: $instance->_endState(static::$request);
+    }
+
+    /**
+     * @param array $matcher_params
+     * @param string $namespace
+     * @return array
+     */
+    private static function handleRouteRequest(array $matcher_params, string $namespace): array
+    {
+// action -> as text : NameController::action
+        $ex_controller_method = explode('::', $matcher_params['_controller']);
+
+        $controller = $ex_controller_method[0] ?? $matcher_params['_controller'];
+        $method = $ex_controller_method[1] ?? $matcher_params['method'];
+
+        static::config()->set('app._method', $method);
+
+        // remove id from parameters when 0 value
+        $matcher_params = Arr::where($matcher_params, static function ($value, $key) {
+            return !($key === 'id' && $value === 0);
+        });
+
+        // add matcher to request parameters
+        static::$request->attributes->add($matcher_params);
+
+        // secure app, accept request from app_url
+        if (static::$request->getSchemeAndHttpHost() . env('APP_FOLDER') !== env('APP_URL')) {
+            throw new EncryptException('App host does not exist!.');
+        }
+
+        // add namespace to controller if didn't have
+        if ($namespace && $controller !== 'App\Schedule' && !Str::contains($controller, $namespace)) {
+            $controller = $namespace . $controller;
+        }
+        return array($controller, $method);
     }
 
 

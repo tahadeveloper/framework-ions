@@ -1,4 +1,10 @@
 fundamental:
   path: /v1/base/{type}
-  controller: v1\Api::base
+  controller: stage1\Services::base
+  defaults: { type: upload }
+  methods: [ "GET","post" ]
+ba:
+  path: /base/{type}
+  controller: stage1\Services::base
+  defaults: { type: upload }
   methods: [ "GET","post" ]
