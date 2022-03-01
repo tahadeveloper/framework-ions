@@ -2,6 +2,7 @@
 
 use Illuminate\Database\ConnectionResolver;
 use Ions\Bundles\Localization;
+use Ions\Bundles\Logs;
 use Ions\Bundles\Path;
 use Ions\Bundles\Translate;
 use Ions\Foundation\Config;
@@ -91,7 +92,7 @@ if (!function_exists('validate')) {
             $fileLoader = new Translation\FileLoader($filesystem, $translationDir);
             $translator = new Translation\Translator($fileLoader, $locale);
             $factory = new Validation\Factory($translator);
-            if($app->has('db')){
+            if ($app->has('db')) {
                 $presenceVerifier = new Validation\DatabasePresenceVerifier($app->get('db')->getDatabaseManager());
                 $factory->setPresenceVerifier($presenceVerifier);
             }
@@ -101,7 +102,7 @@ if (!function_exists('validate')) {
                 $response = $errors->all();
             }
         } catch (NotFoundExceptionInterface|ContainerExceptionInterface $exception) {
-            $response = ['validation not working, no database connected.'.$exception->getMessage()];
+            $response = ['validation not working, no database connected.' . $exception->getMessage()];
         }
 
         return $response;
@@ -139,19 +140,22 @@ if (!function_exists('newMailer')) {
      */
     function newMailerDsn(array|string $emails, string $subject, $body): bool
     {
-        $transport = Transport::fromDsn('smtp://' . env('MAIL_USERNAME') . ':' . env('MAIL_PASSWORD') . '@' . env('MAIL_HOST') . ':' . env('MAIL_PORT'));
-        $mailer = new Mailer($transport);
-
-        $the_email = (new Email())
-            ->from(new Address(env('MAIL_FROM_ADDRESS', ''), env('MAIL_FROM_NAME', '')))
-            ->to($emails)
-            ->subject($subject)
-            ->html($body);
-
         try {
+
+            $transport = Transport::fromDsn('smtp://' . env('MAIL_USERNAME') . ':' . env('MAIL_PASSWORD') . '@' . env('MAIL_HOST') . ':' . env('MAIL_PORT'));
+            $mailer = new Mailer($transport);
+
+            $the_email = (new Email())
+                ->from(new Address(env('MAIL_FROM_ADDRESS', ''), env('MAIL_FROM_NAME', '')))
+                ->to($emails)
+                ->subject($subject)
+                ->html($body);
+
+
             $mailer->send($the_email);
             return true;
-        } catch (TransportExceptionInterface) {
+        } catch (Throwable $exception) {
+            Logs::create('send_mail.log')->error($exception->getMessage(),['email' => $emails,'subject' => $subject]);
             return false;
         }
     }
@@ -252,8 +256,8 @@ if (!function_exists('trans')) {
      */
     function trans(string|null $key = null, array $replace = [], string|null $domain = null, string|null $locale = null): Translator|bool|string
     {
-        if ( Localization::$localization === null){
-            abort(501,'Must add folder and option in config before use it.');
+        if (Localization::$localization === null) {
+            abort(501, 'Must add folder and option in config before use it.');
         }
 
         if (is_null($key)) {
@@ -284,7 +288,7 @@ if (!function_exists('appGetLocale')) {
      *
      * @return string|null
      */
-    function appGetLocale():string|null
+    function appGetLocale(): string|null
     {
         return config('app.localization.locale');
     }

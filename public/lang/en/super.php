@@ -63,7 +63,7 @@ return [
             ],
             'error' => [
                 'title' => 'Error',
-                'content' => 'Some Items can not delete or delete function not working.',
+                'content' => 'Some Items can not delete it or the delete not work right',
             ]
         ],
         'delete_dialog' => [
@@ -219,7 +219,7 @@ return [
             'name_en' => 'Name(en)',
             'status' => [
                 'text' => 'Status',
-                'access' => 'Access',
+                'access' => 'Approve',
                 'deny' => 'Deny'
             ],
             'delete_dialog' => [
