@@ -272,7 +272,8 @@ class RouteListCommand extends Command
                 'domain' => $route['domain'],
                 'controller' => $route['controller'],
                 'name' => $route['name'],
-                'uri' =>  (Str::is('*api*',$route['domain'])) ? (config('app.app_url').'/api'.$route['uri']): (config('app.app_url').$route['uri']),
+                //'uri' =>  (Str::is('*api*',$route['domain'])) ? (config('app.app_url').'/api'.$route['uri']): (config('app.app_url').$route['uri']),
+                'uri' =>  (Str::is('*api*',$route['domain'])) ? ('/api'.$route['uri']): ($route['uri']),
             ],
         );
 

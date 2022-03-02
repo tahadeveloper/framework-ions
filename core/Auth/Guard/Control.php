@@ -221,6 +221,7 @@ class Control
                 'icon' => $params->icon,
                 'link' => $params->link,
                 'active_name' => $params->active_name,
+                'is_tag' => $params->is_tag ?? 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
@@ -318,6 +319,7 @@ class Control
                 'status' => $params->status,
                 'icon' => $params->icon,
                 'link' => $params->link,
+                'is_tag' => $params->is_tag ?? 0,
                 'active_name' => $params->active_name,
                 'updated_at' => Carbon::now()
             ];

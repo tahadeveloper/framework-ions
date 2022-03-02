@@ -198,6 +198,7 @@ return [
         'link' => 'Link',
         'icon' => 'Icon',
         'active_name' => 'Active name',
+        'is_tag' => 'Item is tag',
         'status' => [
             'text' => 'Status',
             'active' => 'Active',

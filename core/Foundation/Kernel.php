@@ -2,6 +2,7 @@
 
 namespace Ions\Foundation;
 
+use Ions\Bundles\Logs;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\NoConfigurationException;
 use const EXTR_SKIP;
@@ -303,7 +304,32 @@ class Kernel extends Singleton
             static::$response->headers->addCacheControlDirective('must-revalidate', true);
             static::$response->send();
 
-        } catch (Throwable) {
+        }catch (NoConfigurationException){
+            if ($namespace === 'API\\') {
+                static::$response->setContent(['error' => 'No configurations found']);
+            } else {
+                static::$response->setContent(static::HtmlErrorRender([
+                    'statusText' => 'No configurations found :',
+                    'statusCode' => '404',
+                ]));
+            }
+            static::$response->setStatusCode(ResponseAlias::HTTP_NOT_FOUND);
+            static::$response->send();
+            die();
+
+        } catch (MethodNotAllowedException){
+            if ($namespace === 'API\\') {
+                static::$response->setContent(['error' => 'Method not allowed']);
+            } else {
+                static::$response->setContent(static::HtmlErrorRender([
+                    'statusText' => 'Method not allowed',
+                    'statusCode' => '405',
+                ]));
+            }
+            static::$response->setStatusCode(ResponseAlias::HTTP_METHOD_NOT_ALLOWED);
+            static::$response->send();
+            die();
+        } catch (ResourceNotFoundException){
             if ($namespace === 'API\\') {
                 static::$response->setContent(['error' => 'Page route not found']);
             } else {
@@ -315,7 +341,13 @@ class Kernel extends Singleton
             static::$response->setStatusCode(ResponseAlias::HTTP_NOT_FOUND);
             static::$response->send();
             die();
+        } catch (Throwable $exception) {
+            if(!env('APP_DEBUG')){
+                Logs::create('up_error.log')->error($exception->getMessage(), ['path' => $target_folder]);
+            }
+            abort(500,$exception->getMessage());
         }
+
     }
 
     /**
@@ -340,7 +372,7 @@ class Kernel extends Singleton
         $target_folder === 'web' ? $attributes_path = Path::src('Http') : $attributes_path = Path::api();
         if (Storage::exists($attributes_path)) {
             $loader = new AnnotationDirectoryLoader(new FileLocator($attributes_path), new AnnotatedRouteControllerLoader());
-            $attributes_routes = $loader->load($attributes_path );
+            $attributes_routes = $loader->load($attributes_path);
             if (!empty($attributes_routes->all())) {
                 $routes->addCollection($attributes_routes);
             }
@@ -359,7 +391,7 @@ class Kernel extends Singleton
      */
     private static function instanceTheController(mixed $controller, mixed $method): void
     {
-// instance the controller
+        // instance the controller
         $instance = new $controller();
         !method_exists($instance, '_initState') ?: $instance->_initState(static::$request);
         !method_exists($instance, '_loadInit') ?: $instance->_loadInit(static::$request);

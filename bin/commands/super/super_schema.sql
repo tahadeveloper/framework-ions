@@ -75,6 +75,7 @@ CREATE TABLE `controls` (
   `parent_id` int(10) unsigned DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT '0',
+  `is_tag` tinyint(1) NOT NULL DEFAULT '0',
   `link` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `icon` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `active_name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
