@@ -40,6 +40,12 @@ return [
             'choose' => 'Select an option'
         ]
     ],
+    'notify area' => [
+        'title' => 'Notifications',
+        'alert title' => 'Alerts',
+        'updates title' => 'Updates',
+        'no notifications' => 'There are no notifications'
+    ],
     'validation' => [
         'min' => 'The password must be more than 6 characters long'
     ],

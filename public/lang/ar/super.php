@@ -15,20 +15,18 @@ return [
             'updated_at' => 'محدث في',
         ],
         'btn' => [
-            'actions' => 'أجراءات',
+            'actions' => 'الإجراءات',
             'edit' => 'تعديل',
             'delete' => 'حذف',
             'details' => 'تفاصيل',
             'privileges' => 'الامتيازات',
-            'create' => 'إنشاء',
+            'create' => 'اضف جديد',
             'show' => 'عرض البيانات',
             'cancel' => 'إلغاء',
             'save' => 'حفظ التغييرات',
             'delete_selected' => 'حذف المحدد',
             'view' => 'عرض',
         ],
-
-
     ],
     'inputs' => [
         'image' => [
@@ -39,6 +37,12 @@ return [
         'select' => [
             'choose' => 'حدد أحد الخيارات'
         ]
+    ],
+    'notify area' => [
+        'title' => 'الإشعارات',
+        'alert title' => 'تنبيهات',
+        'updates title' => 'التحديثات',
+        'no notifications' => 'لا توجد إخطارات'
     ],
     'validation' => [
         'min' => 'يجب أن تكون كلمة المرور أكثر من 6 أحرف'
