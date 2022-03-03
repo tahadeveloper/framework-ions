@@ -13,6 +13,15 @@ return [
             'search' => 'بحث',
             'created_at' => 'أنشئت في',
             'updated_at' => 'محدث في',
+            'caption_tbl' => 'عرض النتائج في ',
+            'export_report' => 'تصدير التقرير',
+            'export_report_title' => 'تقرير ',
+            'export_btn' => [
+                'copy' => 'نسخ إلى الحافظة',
+                'excel' => 'تصدير بتنسيق Excel',
+                'csv' => 'تصدير كملف CSV',
+                'pdf' => 'تصدير كملف PDF',
+            ]
         ],
         'btn' => [
             'actions' => 'الإجراءات',

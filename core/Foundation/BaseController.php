@@ -28,6 +28,9 @@ abstract class BaseController implements BluePrint
         // Implement _initState() method.
     }
 
+    /**
+     * @internal
+     */
     public function _loadInit(Request $request): void
     {
         $config_locale = config('app.localization.locale',$this->locale);

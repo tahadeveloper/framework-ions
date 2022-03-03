@@ -144,7 +144,7 @@ class User extends Singleton
     {
         $collection = DB::connection(self::$connection_name)
             ->table(self::$tables_names['users'])
-            ->where('email', '!=', 'admin@ionzile.com')
+            ->where('id', '!=', 1)
             ->get();
         $collection->map(function ($single) use ($language) {
             $roles = DB::connection(self::$connection_name)

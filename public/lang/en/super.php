@@ -13,6 +13,15 @@ return [
             'search' => 'Search',
             'created_at' => 'Created at',
             'updated_at' => 'Updated at',
+            'caption_tbl' => 'Showing result in ',
+            'export_report' => 'Export report',
+            'export_report_title' => 'report',
+            'export_btn' => [
+                'copy' => 'Copy to clipboard',
+                'excel' => 'Export as Excel',
+                'csv' => 'Export as CSV',
+                'pdf' => 'Export as PDF',
+            ]
         ],
         'btn' => [
             'actions' => 'Actions',

@@ -16,11 +16,11 @@ return [
     | theme style 'light' or 'dark'
     |--------------------------------------------------------------------------
     */
-    'theme_style' => 'light',
+    'theme_style' => 'dark',
     /*
     |--------------------------------------------------------------------------
-    | theme name 'default', 'bird', 'classic
+    | theme name 'default', 'bird', 'classic', 'trend'
     |--------------------------------------------------------------------------
     */
-    'theme' => 'default',
+    'theme' => 'trend',
 ];
