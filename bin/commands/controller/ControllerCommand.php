@@ -166,7 +166,7 @@ class ControllerCommand extends Command
                     'slug' => 'add',
                     'status' => 0,
                     'languages' => [
-                        ['language_name' => 'ar', 'action_name' => 'ألإضافة'],
+                        ['language_name' => 'ar', 'action_name' => 'الإضافة'],
                         ['language_name' => 'en', 'action_name' => 'Add'],
                     ]
                 ],

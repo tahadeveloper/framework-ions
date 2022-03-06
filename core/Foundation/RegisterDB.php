@@ -16,7 +16,7 @@ class RegisterDB extends Singleton
 
     public static function boot(): void
     {
-        $allow_database_engine = config('app.database_engine', []);
+        $allow_database_engine = config('app.database_engine',[]);
 
         if (in_array('db', $allow_database_engine, true)) {
             self::DBConnections();

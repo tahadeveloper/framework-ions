@@ -33,7 +33,11 @@ abstract class BaseController implements BluePrint
      */
     public function _loadInit(Request $request): void
     {
-        $config_locale = config('app.localization.locale',$this->locale);
+        if ($this->session->has('_super') && isset($this->session->get('_super')['_locale'])) {
+            appSetLocale($this->session->get('_super')['_locale']);
+        }
+
+        $config_locale = config('app.localization.locale', $this->locale);
         Localization::init($this->locale_folder, $config_locale);
         $trans_json = Localization::localeJson($config_locale);
 

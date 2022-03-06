@@ -4,11 +4,14 @@ namespace {{ namespace }};
 
 use Ions\Foundation\BaseController;
 use Ions\Support\Request;
-use Super\Authentication\SharedData;
+use App\Http\super\Authentication\SharedData;
 
 class {{ class }} extends BaseController
 {
-    public function _initState(Request $request): void
+    protected string $view_folder = '@super/';
+    protected string $locale_folder = 'super';
+
+    public function _loadedState(Request $request): void
     {
         SharedData::shared($this->twig);
         SharedData::accessApprove(['add' => 'save', 'edit' => 'update', 'index' => 'view','destroy' => 'destroyMulti']);

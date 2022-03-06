@@ -1,19 +1,19 @@
 <?php
 
-use Illuminate\Database\ConnectionResolver;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Foundation\Application;
 use Ions\Bundles\Localization;
 use Ions\Bundles\Logs;
 use Ions\Bundles\Path;
-use Ions\Bundles\Translate;
 use Ions\Foundation\Config;
 use Ions\Foundation\Kernel;
 use Ions\Support\Arr;
 use Ions\Support\DB;
+use Ions\Support\JsonResponse;
 use JetBrains\PhpStorm\NoReturn;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Address;
@@ -58,7 +58,7 @@ if (!function_exists('csrfCheck')) {
         $csrfStorage = new NativeSessionTokenStorage();
         $csrfManager = new CsrfTokenManager($csrfGenerator, $csrfStorage);
         if ($request === 1) {
-            $token = filter_input(INPUT_POST, '_ion_token');
+            $token = Kernel::request()->get('_ion_token');
         }
 
         $is_valid = false;
@@ -195,15 +195,20 @@ if (!function_exists('toObject')) {
 if (!function_exists('toJson')) {
     /**
      * @param array $unhandled
+     * @param bool $sec_level
      * @return object|null
      */
-    function toJson(array $unhandled): string|null
+    function toJson(array $unhandled,bool $sec_level = false): string|null
     {
-        try {
-            return json_encode($unhandled, JSON_THROW_ON_ERROR);
-        } catch (JsonException) {
-            return null;
+        $handle_arr = [];
+        foreach ($unhandled as $key => $value){
+            if(is_array($value) && $sec_level){
+                $handle_arr[$key] = (new JsonResponse($value))->getContent();
+            }else{
+                $handle_arr[$key] = $value;
+            }
         }
+        return (new JsonResponse($handle_arr))->getContent();
     }
 }
 
@@ -273,7 +278,6 @@ if (!function_exists('appSetLocale')) {
      * Set the current application locale.
      *
      * @param string $locale
-     * @param string $domain
      * @return void
      */
     function appSetLocale(string $locale)
@@ -291,5 +295,40 @@ if (!function_exists('appGetLocale')) {
     function appGetLocale(): string|null
     {
         return config('app.localization.locale');
+    }
+}
+
+if (! function_exists('app')) {
+    /**
+     * Get the available container instance.
+     *
+     * @param string|null $abstract
+     * @param array $parameters
+     * @return mixed|Application
+     * @throws BindingResolutionException
+     */
+    function app(string|null $abstract = null, array $parameters = []): mixed
+    {
+        if (is_null($abstract)) {
+            return Kernel::app();
+        }
+
+        return Kernel::app()->make($abstract, $parameters);
+    }
+}
+
+if (!function_exists('datatableCols')) {
+    /**
+     * @param array $columns
+     * @return string
+     */
+    function datatableCols(array $columns): string
+    {
+        $dt_cols = [];
+        foreach ($columns as $column){
+            $dt_cols[] = ['data' => $column];
+        }
+
+        return toJson($dt_cols);
     }
 }

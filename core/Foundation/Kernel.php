@@ -3,6 +3,7 @@
 namespace Ions\Foundation;
 
 use Ions\Bundles\Logs;
+use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\NoConfigurationException;
 use const EXTR_SKIP;
@@ -37,7 +38,6 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader;
 use App\Booting;
 
@@ -278,7 +278,8 @@ class Kernel extends Singleton
      */
     public static function make(string $target_folder, string $namespace = ''): void
     {
-        $target_folder === 'api' ? static::errorDebugApi() : static::errorDebug();
+        self::request()->wantsJson() ? static::errorDebugApi() : static::errorDebug();
+
         try {
             $routes = static::captureRoute($target_folder);
             $context = new RequestContext();
@@ -295,7 +296,7 @@ class Kernel extends Singleton
 
             static::$response->setVary(['Accept-Encoding', 'gzip, compress, br']);
             static::$response->setVary(['Content-Encoding', 'br']);
-            list($controller, $method) = self::handleRouteRequest($matcher_params, $namespace);
+            [$controller, $method] = self::handleRouteRequest($matcher_params, $namespace);
 
             self::instanceTheController($controller, $method);
 
@@ -304,50 +305,47 @@ class Kernel extends Singleton
             static::$response->headers->addCacheControlDirective('must-revalidate', true);
             static::$response->send();
 
-        }catch (NoConfigurationException){
-            if ($namespace === 'API\\') {
-                static::$response->setContent(['error' => 'No configurations found']);
-            } else {
-                static::$response->setContent(static::HtmlErrorRender([
-                    'statusText' => 'No configurations found :',
-                    'statusCode' => '404',
-                ]));
-            }
-            static::$response->setStatusCode(ResponseAlias::HTTP_NOT_FOUND);
-            static::$response->send();
-            die();
-
-        } catch (MethodNotAllowedException){
-            if ($namespace === 'API\\') {
-                static::$response->setContent(['error' => 'Method not allowed']);
-            } else {
-                static::$response->setContent(static::HtmlErrorRender([
-                    'statusText' => 'Method not allowed',
-                    'statusCode' => '405',
-                ]));
-            }
-            static::$response->setStatusCode(ResponseAlias::HTTP_METHOD_NOT_ALLOWED);
-            static::$response->send();
-            die();
-        } catch (ResourceNotFoundException){
-            if ($namespace === 'API\\') {
-                static::$response->setContent(['error' => 'Page route not found']);
-            } else {
-                static::$response->setContent(static::HtmlErrorRender([
-                    'statusText' => 'Page route not found',
-                    'statusCode' => '404',
-                ]));
-            }
-            static::$response->setStatusCode(ResponseAlias::HTTP_NOT_FOUND);
-            static::$response->send();
-            die();
+        } catch (NoConfigurationException) {
+            self::makeError('No configurations found', 404);
+        } catch (MethodNotAllowedException) {
+            self::makeError('Method not allowed', 405);
+        } catch (ResourceNotFoundException) {
+            self::makeError('Page route not found', 404);
         } catch (Throwable $exception) {
-            if(!env('APP_DEBUG')){
+
+            if (self::request()->wantsJson()) {
+                static::$response->setContent(toJson(['message' => $exception->getMessage()]));
+                static::$response->setStatusCode(500);
+                static::$response->send();
+            } else {
+                abort(500, $exception);
+            }
+
+            if (!env('APP_DEBUG')) {
                 Logs::create('up_error.log')->error($exception->getMessage(), ['path' => $target_folder]);
             }
-            abort(500,$exception->getMessage());
         }
 
+    }
+
+    /**
+     * @param string $error
+     * @param int $status_code
+     * @return void
+     */
+    #[NoReturn] private static function makeError(string $error, int $status_code): void
+    {
+        if (self::request()->wantsJson()) {
+            static::$response->setContent(toJson(['message' => $error]));
+        } else {
+            static::$response->setContent(static::HtmlErrorRender([
+                'statusText' => $error,
+                'statusCode' => $status_code,
+            ]));
+        }
+        static::$response->setStatusCode($status_code);
+        static::$response->send();
+        die();
     }
 
     /**
@@ -373,7 +371,7 @@ class Kernel extends Singleton
         if (Storage::exists($attributes_path)) {
             $loader = new AnnotationDirectoryLoader(new FileLocator($attributes_path), new AnnotatedRouteControllerLoader());
             $attributes_routes = $loader->load($attributes_path);
-            if (!empty($attributes_routes->all())) {
+            if ($attributes_routes !== null && !empty($attributes_routes->all())) {
                 $routes->addCollection($attributes_routes);
             }
         }
@@ -438,6 +436,5 @@ class Kernel extends Singleton
         }
         return array($controller, $method);
     }
-
 
 }

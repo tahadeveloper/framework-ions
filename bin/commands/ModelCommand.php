@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
 use Ions\Bundles\Path;
+use Ions\Support\File;
 use JetBrains\PhpStorm\Pure;
 
 class ModelCommand extends Command
@@ -19,8 +20,8 @@ class ModelCommand extends Command
         $name_snake = Str::snake($name_cap); // Example_Text
         $name_lower = Str::lower($name_snake); // example_text
 
-        if (!Storage::exists(Path::src('Models'))) {
-            Storage::makeDirectory(Path::src('Models'));
+        if (!File::exists(Path::src('Models'))) {
+            File::makeDirectory(Path::src('Models'), 0755, true, true);
         }
 
         $new_file = Path::src('Models/' . $name . '.php');

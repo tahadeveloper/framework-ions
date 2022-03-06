@@ -20,11 +20,13 @@ class {{ class }} extends ProviderController
     {
         $rules = [
             'title' => 'required',
+            'ids' => 'required|array',
             'id' => 'required|numeric|not_in:0|exists:' . static::$tbl . ',id'
         ];
         return match ($type) {
             'store' => Arr::only($rules, ['title']),
             'update' => Arr::only($rules, ['title', 'id']),
+            'deleteAll' => Arr::only($rules, ['ids']),
             'single', 'delete' => Arr::only($rules, ['id']),
             default => $rules,
         };
@@ -109,6 +111,23 @@ class {{ class }} extends ProviderController
 
         try {
             DB::table(static::$tbl)->where('id', $param)->delete();
+            self::deletedResponse(['response' => trans('delete_success',[],'provider')]);
+        } catch (Throwable $exception) {
+            self::serverError($exception->getMessage());
+        }
+        return new self();
+    }
+
+    public static function deleteAll($param): static
+    {
+        $valid = validate(['ids' => $param], static::validRules('deleteAll'));
+        if (!empty($valid)) {
+            self::badRequest($valid);
+            return new self();
+        }
+
+        try {
+            DB::table(static::$tbl)->whereIn('id', $param)->delete();
             self::deletedResponse(['response' => trans('delete_success',[],'provider')]);
         } catch (Throwable $exception) {
             self::serverError($exception->getMessage());

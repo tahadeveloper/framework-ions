@@ -125,7 +125,8 @@ class MRoute extends Singleton
     {
         $prefix = null;
         if (!empty(static::$prefix)) {
-            $prefix = static::$prefix . DIRECTORY_SEPARATOR;
+            //. DIRECTORY_SEPARATOR
+            $prefix = static::$prefix ;
         }
         return $prefix;
     }

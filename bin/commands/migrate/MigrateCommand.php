@@ -49,12 +49,13 @@ class MigrateCommand extends Command
 
             $this->info('Schema removed tables successfully.');
         }else{
-            foreach (glob(Path::database('schema').'/*.php') as $file)
+            $db_name  = $this->input->getOption('database') ?? 'default';
+            foreach (glob(Path::database('Schema').'/*.php') as $file)
             {
                 $class = basename($file, '.php');
-                $load_class = 'Database\Schema\\'.$class;
+                $load_class = 'App\Database\Schema\\'.$class;
                 $obj = new $load_class;
-                Schema::enableForeignKeyConstraints();
+                Schema::connection($db_name)->enableForeignKeyConstraints();
                 $obj->up();
 
                 $this->info('Schema class '.$class.' run successfully.');

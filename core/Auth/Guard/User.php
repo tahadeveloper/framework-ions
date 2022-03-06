@@ -163,25 +163,25 @@ class User extends Singleton
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @return mixed
      */
-    public static function delete($id): mixed
+    public static function delete(int $id): mixed
     {
         return (Sentinel::findById($id))->delete();
     }
 
     /**
-     * @param $ids
+     * @param string $ids
      * @return array
      */
-    public static function deleteMulti($ids): array
+    public static function deleteMulti(string $ids): array
     {
         $result = [];
         foreach (explode(',', $ids) as $id) {
             $del = Sentinel::findById($id)->delete();
             if (!$del) {
-                $result[] = ['id' => $id];
+                $result[] = ['ids' => $id];
             }
         }
         return $result;

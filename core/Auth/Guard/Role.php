@@ -190,20 +190,20 @@ class Role extends Singleton
     }
 
     /**
-     * @param $role_id
+     * @param int $role_id
      * @return int
      */
-    public static function delete($role_id): int
+    public static function delete(int $role_id): int
     {
         return DB::connection(self::$connection_name)
             ->table(self::$tables_names['roles'])->where('id', $role_id)->delete();
     }
 
     /**
-     * @param $ids
+     * @param array $ids
      * @return int
      */
-    public static function deleteMulti($ids): int
+    public static function deleteMulti(array $ids): int
     {
         return DB::connection(self::$connection_name)
             ->table(self::$tables_names['roles'])->whereIn('id', $ids)->delete();

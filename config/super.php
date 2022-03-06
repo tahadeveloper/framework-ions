@@ -6,7 +6,7 @@ return [
     | default language and locales
     |--------------------------------------------------------------------------
    */
-    'multi_locale' => false,
+    'multi_locale' => true,
     'languages' => [
         'ar' => ['prefix' => 'ar', 'name' => 'عربي', 'dir' => 'rtl', 'flag' => 'egypt'],
         'en' => ['prefix' => 'en', 'name' => 'English', 'dir' => 'ltr', 'flag' => 'united-states'],
@@ -22,5 +22,5 @@ return [
     | theme name 'default', 'bird', 'classic', 'trend'
     |--------------------------------------------------------------------------
     */
-    'theme' => 'trend',
+    'theme' => 'default',
 ];

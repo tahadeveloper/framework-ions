@@ -4,6 +4,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Ions\Bundles\Path;
+use Ions\Support\File;
 
 class SchemaCommand extends Command
 {
@@ -17,8 +18,8 @@ class SchemaCommand extends Command
         $name_snake = Str::snake($name_cap); // Example_Text
         $name_lower = Str::lower($name_snake); // example_text
 
-        if (!Storage::exists(Path::database('Schema'))) {
-            Storage::makeDirectory(Path::database('Schema'));
+        if (!File::exists(Path::database('Schema'))) {
+            File::makeDirectory(Path::database('Schema'), 0755, true, true);
         }
 
         $new_file = Path::database('Schema/'.$name.'.php');

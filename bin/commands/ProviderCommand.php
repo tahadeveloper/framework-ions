@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Ions\Bundles\Path;
+use Ions\Support\File;
 
 class ProviderCommand extends Command
 {
@@ -18,8 +19,8 @@ class ProviderCommand extends Command
         $name_snake = Str::snake($name_cap); // Example_Text
         $name_lower = Str::lower($name_snake); // example_text
 
-        if (!Storage::exists(Path::src('Providers'))) {
-            Storage::makeDirectory(Path::src('Providers'));
+        if (!File::exists(Path::src('Providers'))) {
+            File::makeDirectory(Path::src('Providers'), 0755, true, true);
         }
 
         $new_file = Path::src('Providers/' . $name . '.php');
