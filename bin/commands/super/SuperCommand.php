@@ -2,8 +2,8 @@
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use Ions\Auth\Guard\Role;
-use Ions\Auth\Guard\User;
+use Ions\Auth\Guard\GuardRole;
+use Ions\Auth\Guard\GuardUser;
 use Ions\Bundles\Path;
 use Ions\Support\Storage;
 
@@ -78,7 +78,7 @@ class SuperCommand extends Command
         ];
 
         $params = json_decode(json_encode($params, JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
-        $role_id = Role::add($params);
+        $role_id = GuardRole::add($params);
 
         $user_params = [
             'email' => 'admin@ionzile.com',
@@ -94,7 +94,7 @@ class SuperCommand extends Command
             'image_name' => null,
             'role_id' => $role_id
         ];
-        User::add((object)$user_params, true);
+        GuardUser::add((object)$user_params, true);
 
         $this->info('Super main role added successfully.');
     }

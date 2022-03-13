@@ -3,7 +3,7 @@
 namespace {{ namespace }};
 
 use Illuminate\Support\Carbon;
-use Ions\Bundles\QueryBuilder;
+use Ions\Builders\QueryBuilder;
 use Ions\Foundation\ProviderController;
 use Ions\Support\Arr;
 use Ions\Support\DB;
@@ -14,29 +14,24 @@ use Throwable;
 class {{ class }} extends ProviderController
 {
     private static string $tbl = '{{ table }}';
-    private static array $tbl_columns = [{{ columns }}];
+    private static array $columns = [{{ columns }}];
 
-    #[Pure] private static function validRules($type): array
+    #[Pure]
+    private static function rules($items = []): array
     {
         $rules = [
-            'title' => 'required',
-            'ids' => 'required|array',
-            'id' => 'required|numeric|not_in:0|exists:' . static::$tbl . ',id'
+            'name' => 'required',
+            'id' => 'required|numeric|not_in:0|exists:' . static::$tbl . ',id',
+            'ids' => 'required|array'
         ];
-        return match ($type) {
-            'store' => Arr::only($rules, ['title']),
-            'update' => Arr::only($rules, ['title', 'id']),
-            'deleteAll' => Arr::only($rules, ['ids']),
-            'single', 'delete' => Arr::only($rules, ['id']),
-            default => $rules,
-        };
+
+        return $items ? Arr::only($rules, $items) : $rules;
     }
 
     public static function store(stdClass $param): static
     {
-        $valid = validate($param, static::validRules('store'));
-        if (!empty($valid)) {
-            self::badRequest($valid);
+        if ($validated = validate($param, static::rules(['name']))) {
+            self::badRequest($validated);
             return new self();
         }
 
@@ -46,7 +41,7 @@ class {{ class }} extends ProviderController
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
-            self::createdResponse(['response' => trans('create_success',[],'provider')]);
+            self::createdResponse(['response' => trans('create_success', [], 'provider')]);
         } catch (Throwable $exception) {
             self::serverError($exception->getMessage());
         }
@@ -54,15 +49,17 @@ class {{ class }} extends ProviderController
         return new self();
     }
 
-    public static function single($param): static
+    public static function single($id): static
     {
-        $valid = validate(['id' => $param], static::validRules('single'));
-        if (!empty($valid)) {
-            self::badRequest($valid);
+        if ($validated = validate(['id' => $id],self::rules(['id']))) {
+            self::badRequest($validated);
             return new self();
         }
 
-        $item = DB::table(static::$tbl)->find($param);
+        $item = QueryBuilder::for(static::$tbl)
+            ->allowedFields(self::$columns)
+            ->allowFilters()
+            ->sole($id);
         self::successResponse($item);
 
         return new self();
@@ -70,20 +67,21 @@ class {{ class }} extends ProviderController
 
     public static function show(): static
     {
-        $pre_items = DB::table(static::$tbl);
-        $fields = static::$tbl_columns;
-        $items = new QueryBuilder($pre_items, $fields);
-        [$data, $total] = $items->toResponse();
-        $paging = ['total' => $total, 'limit' => $items->count, 'offset' => $items->offset];
-        self::successResponse(array_merge($paging, ['items' => $data]));
+        $data = QueryBuilder::for(static::$tbl)
+            ->allowedFields(self::$columns)
+            ->allowFilters()
+            ->allowedSorts(self::$columns)
+            ->get();
+        $paging = ['total' => $data['total'], 'limit' => $data['limit'], 'offset' => $data['offset']];
+
+        self::successResponse(array_merge($paging, ['items' => $data['items']]));
         return new self();
     }
 
     public static function update(stdClass $param): static
     {
-        $valid = validate($param, static::validRules('update'));
-        if (!empty($valid)) {
-            self::badRequest($valid);
+        if ($validated = validate($param, static::rules(['id', 'name']))) {
+            self::badRequest($validated);
             return new self();
         }
 
@@ -93,7 +91,7 @@ class {{ class }} extends ProviderController
                     'title' => $param->title,
                     'updated_at' => Carbon::now()
                 ]);
-            self::updatedResponse(['response' => trans('update_success',[],'provider')]);
+            self::updatedResponse(['response' => trans('update_success', [], 'provider')]);
         } catch (Throwable $exception) {
             self::serverError($exception->getMessage());
         }
@@ -101,34 +99,32 @@ class {{ class }} extends ProviderController
         return new self();
     }
 
-    public static function delete($param): static
+    public static function delete($id): static
     {
-        $valid = validate(['id' => $param], static::validRules('delete'));
-        if (!empty($valid)) {
-            self::badRequest($valid);
+        if ($validation = validate(['id' => $id], self::rules(['id']))) {
+            self::badRequest($validation);
             return new self();
         }
 
         try {
-            DB::table(static::$tbl)->where('id', $param)->delete();
-            self::deletedResponse(['response' => trans('delete_success',[],'provider')]);
+            DB::table(static::$tbl)->where('id', $id)->delete();
+            self::deletedResponse(['response' => trans('delete_success', [], 'provider')]);
         } catch (Throwable $exception) {
             self::serverError($exception->getMessage());
         }
         return new self();
     }
 
-    public static function deleteAll($param): static
+    public static function deleteAll($ids): static
     {
-        $valid = validate(['ids' => $param], static::validRules('deleteAll'));
-        if (!empty($valid)) {
-            self::badRequest($valid);
+        if ($validation = validate(['ids' => $ids], self::rules(['ids']))) {
+            self::badRequest($validation);
             return new self();
         }
 
         try {
-            DB::table(static::$tbl)->whereIn('id', $param)->delete();
-            self::deletedResponse(['response' => trans('delete_success',[],'provider')]);
+            DB::table(static::$tbl)->whereIn('id', $ids)->delete();
+            self::deletedResponse(['response' => trans('delete_success', [], 'provider')]);
         } catch (Throwable $exception) {
             self::serverError($exception->getMessage());
         }

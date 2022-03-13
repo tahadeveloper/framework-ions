@@ -1,0 +1,15 @@
+fundamental:
+  path: /api/v1/base/{type}
+  controller: v1\Services::base
+  defaults: { type: upload }
+  methods: [ "GET","post" ]
+ba:
+  path: /api/base/{type}
+  controller: v1\Services::base
+  defaults: { type: upload }
+  methods: [ "GET","post" ]
+category:
+  path: /api/category/{id}
+  controller: v1\Services::category
+  defaults: { id: 0 }
+  methods: [ "GET" ]

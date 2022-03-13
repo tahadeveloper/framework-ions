@@ -155,7 +155,7 @@ if (!function_exists('newMailer')) {
             $mailer->send($the_email);
             return true;
         } catch (Throwable $exception) {
-            Logs::create('send_mail.log')->error($exception->getMessage(),['email' => $emails,'subject' => $subject]);
+            Logs::create('send_mail.log')->error($exception->getMessage(), ['email' => $emails, 'subject' => $subject]);
             return false;
         }
     }
@@ -198,17 +198,33 @@ if (!function_exists('toJson')) {
      * @param bool $sec_level
      * @return object|null
      */
-    function toJson(array $unhandled,bool $sec_level = false): string|null
+    function toJson(array $unhandled, bool $sec_level = false): string|null
     {
         $handle_arr = [];
-        foreach ($unhandled as $key => $value){
-            if(is_array($value) && $sec_level){
+        foreach ($unhandled as $key => $value) {
+            if (is_array($value) && $sec_level) {
                 $handle_arr[$key] = (new JsonResponse($value))->getContent();
-            }else{
+            } else {
                 $handle_arr[$key] = $value;
             }
         }
         return (new JsonResponse($handle_arr))->getContent();
+    }
+}
+
+if (!function_exists('display')) {
+    /**
+     * @param string $json
+     * @param bool $continue
+     * @return void
+     */
+    #[NoReturn]
+    function display(string $json, bool $continue = false): void
+    {
+        echo $json;
+        if (!$continue) {
+            exit();
+        }
     }
 }
 
@@ -298,7 +314,7 @@ if (!function_exists('appGetLocale')) {
     }
 }
 
-if (! function_exists('app')) {
+if (!function_exists('app')) {
     /**
      * Get the available container instance.
      *
@@ -325,7 +341,7 @@ if (!function_exists('datatableCols')) {
     function datatableCols(array $columns): string
     {
         $dt_cols = [];
-        foreach ($columns as $column){
+        foreach ($columns as $column) {
             $dt_cols[] = ['data' => $column];
         }
 

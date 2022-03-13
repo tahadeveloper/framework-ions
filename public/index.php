@@ -16,4 +16,4 @@ use Ions\Foundation\Kernel;
 require __DIR__ . '/../vendor/autoload.php';
 
 Kernel::boot();
-Kernel::make('web', 'App\\Http\\');
+Kernel::make( 'App\\Http\\');

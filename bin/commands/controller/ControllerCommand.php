@@ -3,7 +3,7 @@
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Ions\Auth\Guard\Control;
+use Ions\Auth\Guard\GuardControl;
 use Ions\Bundles\Path;
 
 class ControllerCommand extends Command
@@ -190,7 +190,7 @@ class ControllerCommand extends Command
         ];
         try {
             $params = json_decode(json_encode($params, JSON_THROW_ON_ERROR), false, 512, JSON_THROW_ON_ERROR);
-            Control::add($params);
+            GuardControl::add($params);
         } catch (Throwable $exception) {
             $this->comment('Can not add to database as control:' . $exception->getMessage());
         }

@@ -2,8 +2,8 @@
 
 namespace Ions\Foundation;
 
-use Ions\Bundles\Logs;
 use JetBrains\PhpStorm\NoReturn;
+use Spatie\Ignition\Ignition;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\NoConfigurationException;
 use const EXTR_SKIP;
@@ -19,7 +19,6 @@ use Closure;
 use Throwable;
 use Dotenv\Dotenv;
 use Whoops\Handler\JsonResponseHandler;
-use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Facade;
@@ -64,7 +63,7 @@ class Kernel extends Singleton
 
             static::structureBone();
 
-            (Dotenv::createImmutable(static::$environmentPath, static::$env_name))->safeLoad();
+            (Dotenv::createImmutable(realpath(static::$environmentPath), static::$env_name))->safeLoad();
 
             static::Container();
             static::captureConfig();
@@ -223,13 +222,11 @@ class Kernel extends Singleton
     protected static function errorDebug(): void
     {
         if (env('APP_DEBUG', false) === true) {
-            $whoops = new Run;
-            $whoops->pushHandler(new PrettyPageHandler());
-            $whoops->pushHandler(function ($e) {
-                $status_code = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 501;
-                static::response()->setStatusCode($status_code)->send();
-            });
-            $whoops->register();
+            Ignition::make()
+                ->applicationPath(realpath(Path::root('')))
+                //->shouldDisplayException(!env('APP_DEBUG'))
+                ->register();
+
         } else {
             ErrorHandler::register();
             DebugClassLoader::disable();
@@ -248,6 +245,10 @@ class Kernel extends Singleton
         if (env('APP_DEBUG', false) === true) {
             $whoops = new Run;
             $whoops->pushHandler(new JsonResponseHandler());
+            $whoops->pushHandler(function ($e) {
+                $status_code = method_exists($e, 'getStatusCode') ? $e->getStatusCode() : 501;
+                static::response()->setStatusCode($status_code)->send();
+            });
             $whoops->register();
         } else {
             ErrorHandler::register();
@@ -272,13 +273,15 @@ class Kernel extends Singleton
     /**
      * Run app by route it with controller and method
      *
-     * @param string $target_folder
      * @param string $namespace
      * @return void
      */
-    public static function make(string $target_folder, string $namespace = ''): void
+    public static function make(string $namespace = ''): void
     {
         self::request()->wantsJson() ? static::errorDebugApi() : static::errorDebug();
+
+        self::request()->segment(1) === 'api' ? $target_folder = 'api' : $target_folder = 'web';
+        self::request()->segment(1) !== 'api' ?: $namespace .= 'Api\\';
 
         try {
             $routes = static::captureRoute($target_folder);
@@ -311,19 +314,6 @@ class Kernel extends Singleton
             self::makeError('Method not allowed', 405);
         } catch (ResourceNotFoundException) {
             self::makeError('Page route not found', 404);
-        } catch (Throwable $exception) {
-
-            if (self::request()->wantsJson()) {
-                static::$response->setContent(toJson(['message' => $exception->getMessage()]));
-                static::$response->setStatusCode(500);
-                static::$response->send();
-            } else {
-                abort(500, $exception);
-            }
-
-            if (!env('APP_DEBUG')) {
-                Logs::create('up_error.log')->error($exception->getMessage(), ['path' => $target_folder]);
-            }
         }
 
     }
@@ -409,7 +399,7 @@ class Kernel extends Singleton
      */
     private static function handleRouteRequest(array $matcher_params, string $namespace): array
     {
-// action -> as text : NameController::action
+        // action -> as text : NameController::action
         $ex_controller_method = explode('::', $matcher_params['_controller']);
 
         $controller = $ex_controller_method[0] ?? $matcher_params['_controller'];
@@ -432,8 +422,17 @@ class Kernel extends Singleton
 
         // add namespace to controller if didn't have
         if ($namespace && $controller !== 'App\Schedule' && !Str::contains($controller, $namespace)) {
-            $controller = $namespace . $controller;
+            // check if super or api
+            if (Str::contains($controller, 'super') || Str::contains($controller, 'api')) {
+                $controller = $namespace . $controller;
+            } else {
+                $controller = $namespace . 'Controllers\\' . $controller;
+            }
         }
+
+        $slice = Str::afterLast($controller, '\\');
+        static::$request->attributes->add(['_controller_name' => $slice, '_method_name' => $method]);
+
         return array($controller, $method);
     }
 

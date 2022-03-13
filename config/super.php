@@ -22,5 +22,5 @@ return [
     | theme name 'default', 'bird', 'classic', 'trend'
     |--------------------------------------------------------------------------
     */
-    'theme' => 'default',
+    'theme' => 'trend',
 ];

@@ -1,8 +1,8 @@
 
-    #[NoReturn] public function {{ name }}(Request $request): void
+    public function {{ name }}(Request $request): void
     {
         $id = $request->get('id');
-        $inputs = toObject($request->all() + ['id' => $id]);
+        $inputs = toObject($request->inputs());
 
         $this->routeMethod("get", function () use ($id) {
             if ($id) {

@@ -94,7 +94,8 @@ return [
             'success' => 'نجاح',
             'error' => 'خطأ',
         ],
-        'csrf_message' => 'طلب اتصال غير صحيح.',
+        'csrf_message' => 'طلبك منتهي الصلاحية',
+        'delete_error' => 'حدث خطأ عند الحذف',
         'inside_msg' => [
             'error' => [
                 'fail' => 'لا يمكن إضافة عنصر جديد: '

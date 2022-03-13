@@ -90,7 +90,6 @@ class RouteListCommand extends Command
     {
         $routes = new RouteCollection();
 
-        // attributes routing
         $target_folder === 'web' ? $attributes_path = Path::src('Http') : $attributes_path = Path::api();
         if (Storage::exists($attributes_path)) {
             $loader = new AnnotationDirectoryLoader(new FileLocator($attributes_path), new AnnotatedRouteControllerLoader());
@@ -111,15 +110,14 @@ class RouteListCommand extends Command
     protected function getRoutes(): array
     {
         $routes_collection = [];
-        $routes_collection['attr_web'] = $this->captureRouteAttribute('web');
-        $routes_collection['attr_api'] = $this->captureRouteAttribute('api');
+        $routes_collection['attrs/web'] = $this->captureRouteAttribute('web');
+        $routes_collection['attrs/api'] = $this->captureRouteAttribute('api');
 
         $files = Storage::allFiles(Path::route());
         foreach ($files as $file) {
            if(empty($file->getRelativePath())){
                $ext = $file->getExtension();
                $routes_collection[File::name($file).'_'.$ext] = $this->captureRoute($file->getPathName(),$ext);
-
            }
         }
 
@@ -289,6 +287,7 @@ class RouteListCommand extends Command
                 'uri' => $uri,
             ] = $route;
 
+
             $action .= ' › ' . Str::replace('_','/',$domain);
 
             $spaces = str_repeat(' ', max($maxMethod + 6 - mb_strlen($method), 0));
@@ -303,7 +302,6 @@ class RouteListCommand extends Command
             if ($action && ! $this->output->isVerbose() && mb_strlen($method.$spaces.$uri.$action.$dots) > ($terminalWidth - 6)) {
                 $action = substr($action, 0, $terminalWidth - 7 - mb_strlen($method.$spaces.$uri.$dots)).'…';
             }
-
 
             $method = Str::of($method)->explode('|')->map(
                 fn ($method) => sprintf('<fg=%s>%s</>', $this->verbColors[$method] ?? 'default', $method),
@@ -336,22 +334,8 @@ class RouteListCommand extends Command
 
         $name = $name ? "$name   " : null;
 
-//        $rootControllerNamespace = $this->laravel[UrlGenerator::class]->getRootControllerNamespace()
-//            ?? ($this->laravel->getNamespace().'Http\\Controllers');
-//
-//        if (str_starts_with($action, $rootControllerNamespace)) {
-//            return $name.substr($action, mb_strlen($rootControllerNamespace) + 1);
-//        }
-//
-//        $actionClass = explode('@', $action)[0];
-//
-//        if (class_exists($actionClass) && str_starts_with((new ReflectionClass($actionClass))->getFilename(), base_path('vendor'))) {
-//            $actionCollection = collect(explode('\\', $action));
-//
-//            return $name.$actionCollection->take(2)->implode('\\').'   '.$actionCollection->last();
-//        }
-
-        return $name.$action;
+        //return $name.$action;
+        return $action;
     }
 
     /**

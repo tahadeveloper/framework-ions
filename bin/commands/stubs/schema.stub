@@ -9,12 +9,11 @@ use Illuminate\Support\Facades\Schema;
 class {{ class }} extends Migration
 {
     protected string $table_name = '{{ table }}';
-    protected $connection = 'default';
 
     public function up(): void
     {
-        if (!Schema::connection($this->connection)->hasTable($this->table_name)) {
-            Schema::connection($this->connection)->create($this->table_name, static function (Blueprint $table) {
+        if (!Schema::hasTable($this->table_name)) {
+            Schema::create($this->table_name, static function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('title');
                 $table->timestamp('created_at')->useCurrent();
@@ -27,6 +26,6 @@ class {{ class }} extends Migration
 
     public function down(): void
     {
-        Schema::connection($this->connection)->dropIfExists($this->table_name);
+        Schema::dropIfExists($this->table_name);
     }
 }

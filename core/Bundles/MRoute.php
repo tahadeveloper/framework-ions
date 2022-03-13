@@ -160,5 +160,4 @@ class MRoute extends Singleton
 
 }
 
-// create collections
 MRoute::_initState();

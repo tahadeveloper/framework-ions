@@ -96,7 +96,8 @@ return [
             'success' => 'Success',
             'error' => 'Error',
         ],
-        'csrf_message' => 'Wrong call request.',
+        'csrf_message' => 'Your request is expired',
+        'delete_error' => 'An error occurred while deleting',
         'inside_msg' => [
             'error' => [
                 'fail' => 'Can not add new item: '

@@ -51,20 +51,20 @@ class ProviderCommand extends Command
                 ['{{ name }}', '{{ class }}'],
                 [Str::camel($name_cap), $name],
                 Storage::get(Path::bin('commands/stubs/api_method.stub')));
-            Storage::put(Path::root('api/' . $api . '/Services.php'),
-                Str::replaceLast('}', $method_api_replace, Storage::get(Path::root('api/' . $api . '/Services.php'))));
+            Storage::put(Path::api($api . '/Services.php'),
+                Str::replaceLast('}', $method_api_replace, Storage::get(Path::api($api . '/Services.php'))));
 
             $namespace_api_replace = Str::replace(
                 ['{{ namespace }}'],
                 ['App\\Providers\\' . $name],
                 Storage::get(Path::bin('commands/stubs/api_namespace.stub')));
             Storage::put(
-                Path::root('api/' . $api . '/Services.php'),
+                Path::api($api . '/Services.php'),
                 Str::replace(
-                    PHP_EOL.'class Services extends ApiController',
+                    PHP_EOL . 'class Services extends ApiController',
                     $namespace_api_replace,
-                    Storage::get(Path::root('api/' . $api . '/Services.php'))
-                ),null
+                    Storage::get(Path::api($api . '/Services.php'))
+                ), null
             );
 
             $this->info('2. Added to api');
