@@ -15,5 +15,6 @@ use Ions\Foundation\Kernel;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+Kernel::$env_name = '.env';
 Kernel::boot();
 Kernel::make( 'App\\Http\\');
