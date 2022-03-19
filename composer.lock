@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dde099e36725eb7ae88e422113b9f0fd",
+    "content-hash": "dd41efa06eae5b0ff22882d54ca8dacb",
     "packages": [
         {
             "name": "cartalyst/sentinel",
@@ -1928,22 +1928,21 @@
         },
         {
             "name": "ionzile/core",
-            "version": "1.1.0",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tahadeveloper/ions.core.git",
-                "reference": "a3f4d851b607e23aa91a11f68aea5c777319d4ff"
+                "reference": "b2c18d7801809ffd45cc9ca863afbd1f7a54effe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tahadeveloper/ions.core/zipball/a3f4d851b607e23aa91a11f68aea5c777319d4ff",
-                "reference": "a3f4d851b607e23aa91a11f68aea5c777319d4ff",
+                "url": "https://api.github.com/repos/tahadeveloper/ions.core/zipball/b2c18d7801809ffd45cc9ca863afbd1f7a54effe",
+                "reference": "b2c18d7801809ffd45cc9ca863afbd1f7a54effe",
                 "shasum": ""
             },
             "require": {
                 "cartalyst/sentinel": "^v6.0",
                 "ext-openssl": "*",
-                "ext-pdo": "*",
                 "ext-zip": "*",
                 "illuminate/cache": "v9.0.2",
                 "illuminate/console": "v9.0.2",
@@ -1954,7 +1953,7 @@
                 "illuminate/pagination": "v9.0.2",
                 "illuminate/validation": "v9.0.2",
                 "lcobucci/jwt": "^4.1.5",
-                "monolog/monolog": "^2.3.5",
+                "monolog/monolog": "^2.4.0",
                 "peppeocchi/php-cron-scheduler": "^4.0",
                 "php": "^8.0",
                 "symfony/config": "^v6.0.6",
@@ -1964,6 +1963,9 @@
                 "symfony/translation": "^v6.0.6",
                 "symfony/yaml": "^6.0.6",
                 "vlucas/phpdotenv": "^v5.4.1"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.21.2"
             },
             "type": "library",
             "autoload": {
@@ -1983,9 +1985,9 @@
             ],
             "description": "Ionzile core library",
             "support": {
-                "source": "https://github.com/tahadeveloper/ions.core/tree/1.1.0"
+                "source": "https://github.com/tahadeveloper/ions.core/tree/1.1.2"
             },
-            "time": "2022-03-17T13:25:28+00:00"
+            "time": "2022-03-19T06:42:32+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -8501,12 +8503,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "86b842d48cdaaab1bf3dc24fdc830bf7b58cfcab"
+                "reference": "4701a5552ca324de5333d742d51d9cf2786f3186"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/86b842d48cdaaab1bf3dc24fdc830bf7b58cfcab",
-                "reference": "86b842d48cdaaab1bf3dc24fdc830bf7b58cfcab",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4701a5552ca324de5333d742d51d9cf2786f3186",
+                "reference": "4701a5552ca324de5333d742d51d9cf2786f3186",
                 "shasum": ""
             },
             "conflict": {
@@ -8702,7 +8704,7 @@
                 "nette/nette": ">=2,<2.0.19|>=2.1,<2.1.13",
                 "nilsteampassnet/teampass": "<=2.1.27.36",
                 "nukeviet/nukeviet": "<4.3.4",
-                "nystudio107/craft-seomatic": "<3.3",
+                "nystudio107/craft-seomatic": "<3.4.12",
                 "nzo/url-encryptor-bundle": ">=4,<4.3.2|>=5,<5.0.1",
                 "october/backend": "<1.1.2",
                 "october/cms": "= 1.1.1|= 1.0.471|= 1.0.469|>=1.0.319,<1.0.469",
@@ -8731,8 +8733,8 @@
                 "phpfastcache/phpfastcache": "<6.1.5|>=7,<7.1.2|>=8,<8.0.7",
                 "phpmailer/phpmailer": "<6.5",
                 "phpmussel/phpmussel": ">=1,<1.6",
-                "phpmyadmin/phpmyadmin": "<4.9.8|>=5,<5.0.3|>=5.1,<5.1.2",
-                "phpoffice/phpexcel": "<1.8.2",
+                "phpmyadmin/phpmyadmin": "<5.1.3",
+                "phpoffice/phpexcel": "<1.8",
                 "phpoffice/phpspreadsheet": "<1.16",
                 "phpseclib/phpseclib": "<2.0.31|>=3,<3.0.7",
                 "phpservermon/phpservermon": "<=3.5.2",
@@ -8773,7 +8775,7 @@
                 "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<5.7.7",
                 "shopware/storefront": "<=6.4.8.1",
-                "showdoc/showdoc": "<=2.10.2",
+                "showdoc/showdoc": "<2.10.4",
                 "silverstripe/admin": ">=1,<1.8.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
                 "silverstripe/cms": "<4.3.6|>=4.4,<4.4.4",
@@ -8807,10 +8809,10 @@
                 "swiftmailer/swiftmailer": ">=4,<5.4.5",
                 "sylius/admin-bundle": ">=1,<1.0.17|>=1.1,<1.1.9|>=1.2,<1.2.2",
                 "sylius/grid": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
-                "sylius/grid-bundle": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
+                "sylius/grid-bundle": "<1.10.1",
                 "sylius/paypal-plugin": ">=1,<1.2.4|>=1.3,<1.3.1",
                 "sylius/resource-bundle": "<1.3.14|>=1.4,<1.4.7|>=1.5,<1.5.2|>=1.6,<1.6.4",
-                "sylius/sylius": "<1.6.9|>=1.7,<1.7.9|>=1.8,<1.8.3|>=1.9,<1.9.5",
+                "sylius/sylius": "<1.9.10|>=1.10,<1.10.11|>=1.11,<1.11.2",
                 "symbiote/silverstripe-multivaluefield": ">=3,<3.0.99",
                 "symbiote/silverstripe-queuedjobs": ">=3,<3.0.2|>=3.1,<3.1.4|>=4,<4.0.7|>=4.1,<4.1.2|>=4.2,<4.2.4|>=4.3,<4.3.3|>=4.4,<4.4.3|>=4.5,<4.5.1|>=4.6,<4.6.4",
                 "symbiote/silverstripe-versionedfiles": "<=2.0.3",
@@ -8955,7 +8957,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-14T19:04:00+00:00"
+            "time": "2022-03-18T16:08:45+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -10365,9 +10367,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^8.0",
-        "ext-openssl": "*",
-        "ext-pdo": "*",
-        "ext-zip": "*"
+        "ext-pdo": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.1.0"
