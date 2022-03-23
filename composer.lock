@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "278bcf602283e98a5ca3f380f8790c28",
+    "content-hash": "b5d763e55999e7023b9ad2dc4c3acf52",
     "packages": [
         {
             "name": "cartalyst/sentinel",
@@ -2000,16 +2000,16 @@
         },
         {
             "name": "ionzile/core",
-            "version": "1.2.0",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tahadeveloper/ions.core.git",
-                "reference": "2d23f651bdf9d2d5be980ba2b4d696732a7ec9ed"
+                "reference": "4a17b14336a74054578c701dff59ac4350eb501f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tahadeveloper/ions.core/zipball/2d23f651bdf9d2d5be980ba2b4d696732a7ec9ed",
-                "reference": "2d23f651bdf9d2d5be980ba2b4d696732a7ec9ed",
+                "url": "https://api.github.com/repos/tahadeveloper/ions.core/zipball/4a17b14336a74054578c701dff59ac4350eb501f",
+                "reference": "4a17b14336a74054578c701dff59ac4350eb501f",
                 "shasum": ""
             },
             "require": {
@@ -2057,9 +2057,9 @@
             ],
             "description": "Ionzile core library",
             "support": {
-                "source": "https://github.com/tahadeveloper/ions.core/tree/1.2.0"
+                "source": "https://github.com/tahadeveloper/ions.core/tree/1.2.2"
             },
-            "time": "2022-03-22T06:49:56+00:00"
+            "time": "2022-03-23T08:43:32+00:00"
         },
         {
             "name": "lcobucci/clock",
@@ -3379,12 +3379,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "749ec0899a5469dd8cd3cdbf9f91e5ded69a612a"
+                "reference": "0332d340b8173fc4305f3f1c0efe6b4633ee89e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/749ec0899a5469dd8cd3cdbf9f91e5ded69a612a",
-                "reference": "749ec0899a5469dd8cd3cdbf9f91e5ded69a612a",
+                "url": "https://api.github.com/repos/symfony/config/zipball/0332d340b8173fc4305f3f1c0efe6b4633ee89e3",
+                "reference": "0332d340b8173fc4305f3f1c0efe6b4633ee89e3",
                 "shasum": ""
             },
             "require": {
@@ -3448,7 +3448,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-09T21:54:56+00:00"
+            "time": "2022-03-22T16:20:03+00:00"
         },
         {
             "name": "symfony/console",
@@ -10126,16 +10126,16 @@
         },
         {
             "name": "spatie/ignition",
-            "version": "1.2.5",
+            "version": "1.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ignition.git",
-                "reference": "982f69f3c2e525cef62fa23ada047d745e4bcda9"
+                "reference": "be24d33a9de271638314924b5da85e168e4148e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ignition/zipball/982f69f3c2e525cef62fa23ada047d745e4bcda9",
-                "reference": "982f69f3c2e525cef62fa23ada047d745e4bcda9",
+                "url": "https://api.github.com/repos/spatie/ignition/zipball/be24d33a9de271638314924b5da85e168e4148e4",
+                "reference": "be24d33a9de271638314924b5da85e168e4148e4",
                 "shasum": ""
             },
             "require": {
@@ -10192,7 +10192,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-19T14:07:30+00:00"
+            "time": "2022-03-23T11:02:14+00:00"
         },
         {
             "name": "spatie/macroable",
