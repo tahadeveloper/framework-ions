@@ -27,7 +27,7 @@
         "ext-pdo": "*",
         "edwinhoksberg/php-fcm": "^1.2",
         "gabordemooij/redbean": "dev-master",
-        "ionzile/core": "^1.2.4",
+        "ionzile/core": "^1.2.5",
         "naucon/breadcrumbs": "^1.0.2",
         "smarty/smarty": "^v4.1.0",
         "twig/extra-bundle": "^v3.3.8",
