@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5306ca82822f3771955acb2ac39d9796",
+    "content-hash": "cced6ad987f4bad08a4328fbc619c564",
     "packages": [
         {
             "name": "cartalyst/sentinel",
@@ -2000,16 +2000,16 @@
         },
         {
             "name": "ionzile/core",
-            "version": "1.2.6",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tahadeveloper/ions.core.git",
-                "reference": "11a8ff3b751d1f7daa6dc192719add2dd29191eb"
+                "reference": "5857a324f1ff070ca8693b822438d4ed54e27152"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tahadeveloper/ions.core/zipball/11a8ff3b751d1f7daa6dc192719add2dd29191eb",
-                "reference": "11a8ff3b751d1f7daa6dc192719add2dd29191eb",
+                "url": "https://api.github.com/repos/tahadeveloper/ions.core/zipball/5857a324f1ff070ca8693b822438d4ed54e27152",
+                "reference": "5857a324f1ff070ca8693b822438d4ed54e27152",
                 "shasum": ""
             },
             "require": {
@@ -2057,9 +2057,9 @@
             ],
             "description": "Ionzile core library",
             "support": {
-                "source": "https://github.com/tahadeveloper/ions.core/tree/1.2.6"
+                "source": "https://github.com/tahadeveloper/ions.core/tree/1.2.7"
             },
-            "time": "2022-03-26T08:11:10+00:00"
+            "time": "2022-03-26T10:39:50+00:00"
         },
         {
             "name": "ionzile/super",
