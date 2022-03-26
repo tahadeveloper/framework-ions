@@ -27,12 +27,12 @@
         "ext-pdo": "*",
         "edwinhoksberg/php-fcm": "^1.2",
         "gabordemooij/redbean": "dev-master",
-        "ionzile/core": "^1.2.5",
+        "ionzile/core": "^1.2.6",
         "naucon/breadcrumbs": "^1.0.2",
         "smarty/smarty": "^v4.1.0",
         "twig/extra-bundle": "^v3.3.8",
         "twig/intl-extra": "^v3.3.5",
-        "twig/twig": "^v3.3.8",
+        "twig/twig": "^v3.3.9",
         "verot/class.upload.php": "^2.1.0"
     },
     "require-dev": {
