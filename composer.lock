@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c53ca2f04bc73bce3e8a524d9a43a806",
+    "content-hash": "5306ca82822f3771955acb2ac39d9796",
     "packages": [
         {
             "name": "cartalyst/sentinel",
@@ -2060,6 +2060,36 @@
                 "source": "https://github.com/tahadeveloper/ions.core/tree/1.2.6"
             },
             "time": "2022-03-26T08:11:10+00:00"
+        },
+        {
+            "name": "ionzile/super",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tahadeveloper/super.git",
+                "reference": "a542af5a5f83d16857b3627c967591e364ebed55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tahadeveloper/super/zipball/a542af5a5f83d16857b3627c967591e364ebed55",
+                "reference": "a542af5a5f83d16857b3627c967591e364ebed55",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ahmed Hamdi"
+                }
+            ],
+            "description": "ions framework admin panel",
+            "support": {
+                "source": "https://github.com/tahadeveloper/super/tree/1.0.0"
+            },
+            "time": "2022-03-26T10:28:24+00:00"
         },
         {
             "name": "lcobucci/clock",
