@@ -27,8 +27,8 @@
         "ext-pdo": "*",
         "edwinhoksberg/php-fcm": "^1.2",
         "gabordemooij/redbean": "dev-master",
-        "ionzile/core": "^1.2.8",
-        "ionzile/super": "^1.0.0",
+        "ionzile/core": "^1.2.9",
+        "ionzile/super": "^1.0.1",
         "naucon/breadcrumbs": "^1.0.2",
         "smarty/smarty": "^v4.1.0",
         "twig/extra-bundle": "^v3.3.8",
@@ -41,7 +41,7 @@
         "filp/whoops": "^2.14.5",
         "pestphp/pest": "^1.21.2",
         "roave/security-advisories": "dev-latest",
-        "spatie/ignition": "^1.2.6",
+        "spatie/ignition": "^1.2.7",
         "spatie/ray": "^1.34.1"
     },
     "config": {
