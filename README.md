@@ -21,5 +21,5 @@ Install my-project with npm
 
 ## Documentation
 
-[Documentation](https://ionzile.com/docs)
+[Documentation](https://ionzile.com)
 
