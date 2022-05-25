@@ -9,6 +9,7 @@ return [
      |--------------------------------------------------------------------------
     */
     'app_url' => env('APP_URL'),
+    'app_name' => env('APP_NAME'),
     'app_id' => env('APP_ID'),
     'app_debug' => env('APP_DEBUG', false),
     /*
