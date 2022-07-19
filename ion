@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Illuminate\Foundation\Console\RouteListCommand;
+use Ions\commands\RouteListCommand;
 use Ions\Foundation\Kernel;
 use Illuminate\Console\Application;
 use Illuminate\Events\Dispatcher;

@@ -1,12 +1,12 @@
 <?php
 
-use Ions\Bundles\MRoute;
+use Ions\Bundles\Route;
 
-MRoute::get('/super', 'super\Index::index')->name('super_root')->save();
+Route::get('/super', 'super\Index::index', name: 'super_root');
 
-MRoute::prefix('/super/category')->group(function () {
-    MRoute::get('', 'super\Category::index')->save();
-    MRoute::post('-render', 'super\Category::render')->save();
-    MRoute::match(['post', 'delete'], '/deleteMulti', 'super\Category::destroyAll')->save();
-    MRoute::match(['post', 'delete'], '/delete', 'super\Category::destroy')->save();
+Route::prefix('/super/category')->group(function () {
+    Route::get('', 'super\Category::index');
+    Route::post('-render', 'super\Category::render');
+    Route::match(['post', 'delete'], '/deleteMulti', 'super\Category::destroyAll');
+    Route::match(['post', 'delete'], '/delete', 'super\Category::destroy');
 });
