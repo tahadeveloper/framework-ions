@@ -2000,16 +2000,16 @@
         },
         {
             "name": "ionzile/core",
-            "version": "1.3.5",
+            "version": "1.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tahadeveloper/ions.core.git",
-                "reference": "129ff40f5e95043704477555ca16429e5962ae53"
+                "reference": "be034eef84875f3579389f4596cbc11825e336ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tahadeveloper/ions.core/zipball/129ff40f5e95043704477555ca16429e5962ae53",
-                "reference": "129ff40f5e95043704477555ca16429e5962ae53",
+                "url": "https://api.github.com/repos/tahadeveloper/ions.core/zipball/be034eef84875f3579389f4596cbc11825e336ca",
+                "reference": "be034eef84875f3579389f4596cbc11825e336ca",
                 "shasum": ""
             },
             "require": {
@@ -2060,9 +2060,9 @@
             ],
             "description": "Ionzile core library",
             "support": {
-                "source": "https://github.com/tahadeveloper/ions.core/tree/1.3.5"
+                "source": "https://github.com/tahadeveloper/ions.core/tree/1.3.7"
             },
-            "time": "2022-07-19T15:04:52+00:00"
+            "time": "2022-07-19T15:35:40+00:00"
         },
         {
             "name": "ionzile/super",
