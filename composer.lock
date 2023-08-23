@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73b3793e92b5f5b4ce04a8aa2659aef6",
+    "content-hash": "ea57be60499da343afb851009cddc689",
     "packages": [
         {
             "name": "brick/math",
@@ -2323,16 +2323,16 @@
         },
         {
             "name": "ionzile/super",
-            "version": "1.1",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tahadeveloper/super.git",
-                "reference": "e784d193592014b3b567c357311737a62e4e6535"
+                "reference": "032dd3b8ef152425c8cc74a2fd18769d9094f56e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tahadeveloper/super/zipball/e784d193592014b3b567c357311737a62e4e6535",
-                "reference": "e784d193592014b3b567c357311737a62e4e6535",
+                "url": "https://api.github.com/repos/tahadeveloper/super/zipball/032dd3b8ef152425c8cc74a2fd18769d9094f56e",
+                "reference": "032dd3b8ef152425c8cc74a2fd18769d9094f56e",
                 "shasum": ""
             },
             "type": "library",
@@ -2347,9 +2347,9 @@
             ],
             "description": "ions framework admin panel",
             "support": {
-                "source": "https://github.com/tahadeveloper/super/tree/1.1"
+                "source": "https://github.com/tahadeveloper/super/tree/1.2"
             },
-            "time": "2022-10-12T08:46:21+00:00"
+            "time": "2023-08-23T04:12:35+00:00"
         },
         {
             "name": "lcobucci/clock",
