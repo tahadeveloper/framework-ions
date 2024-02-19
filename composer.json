@@ -8,12 +8,12 @@
         "ions"
     ],
     "license": "MIT",
-    "homepage": "https://ionzile.com",
+    "homepage": "https://arabway.net",
     "authors": [
         {
             "name": "Ahmed Hamdi",
             "email": "taha.developer@outlook.com",
-            "homepage": "https://ionzile.com",
+            "homepage": "https://arabway.net",
             "role": "Developer"
         }
     ],
@@ -27,21 +27,21 @@
         "ext-pdo": "*",
         "edwinhoksberg/php-fcm": "^1.2",
         "gabordemooij/redbean": "dev-master",
-        "ionzile/core": "^1.5.9",
+        "ionzile/core": "^1.6.1",
         "ionzile/super": "^1.2",
         "naucon/breadcrumbs": "^1.0.2",
-        "smarty/smarty": "^v4.3.2",
-        "twig/extra-bundle": "^v3.7.0",
-        "twig/intl-extra": "^v3.7.0",
-        "twig/twig": "^v3.7.0",
-        "verot/class.upload.php": "^2.1.4"
+        "smarty/smarty": "^v4.3.5",
+        "twig/extra-bundle": "^v3.8.0",
+        "twig/intl-extra": "^v3.8.0",
+        "twig/twig": "^v3.8.0",
+        "verot/class.upload.php": "^2.x-dev"
     },
     "require-dev": {
-        "fakerphp/faker": "^v1.23.0",
-        "filp/whoops": "^2.15.3",
+        "fakerphp/faker": "^v1.23.1",
+        "filp/whoops": "^2.15.4",
         "pestphp/pest": "^v1.23.1",
         "roave/security-advisories": "dev-latest",
-        "spatie/ignition": "^1.10.1"
+        "spatie/ignition": "^1.12.0"
     },
     "config": {
         "optimize-autoloader": true,
