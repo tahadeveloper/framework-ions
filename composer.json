@@ -23,25 +23,30 @@
         }
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
+        "ext-intl": "*",
+        "ext-openssl": "*",
         "ext-pdo": "*",
+        "creitive/breadcrumbs": "^3.3.2",
         "edwinhoksberg/php-fcm": "^1.2",
         "gabordemooij/redbean": "dev-master",
-        "ionzile/core": "^1.7.1",
+        "sendgrid/sendgrid": "^8.1.11",
+        "ramsey/uuid": "^4.7.6",
+        "symfony/uid": "^6.4.13",
+        "ionzile/core": "^2.0.0",
         "ionzile/super": "^1.2",
-        "naucon/breadcrumbs": "^1.0.2",
-        "smarty/smarty": "^v4.5.2",
-        "twig/extra-bundle": "^v3.9.3",
-        "twig/intl-extra": "^v3.9.2",
-        "twig/twig": "^v3.9.3",
+        "smarty/smarty": "^4.5.5",
+        "twig/extra-bundle": "^3.20.0",
+        "twig/intl-extra": "^3.20.0",
+        "twig/twig": "^3.20.0",
         "verot/class.upload.php": "^2.x-dev"
     },
     "require-dev": {
-        "fakerphp/faker": "^v1.23.1",
-        "filp/whoops": "^2.15.4",
+        "fakerphp/faker": "^1.24.1",
+        "filp/whoops": "^2.18.0",
         "pestphp/pest": "^v1.23.1",
         "roave/security-advisories": "dev-latest",
-        "spatie/ignition": "^1.13.2"
+        "spatie/ignition": "^1.15.1"
     },
     "config": {
         "optimize-autoloader": true,
@@ -50,7 +55,7 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         },"platform": {
-            "php": "8.0.13"
+            "php": "8.2"
         }
     },
     "minimum-stability": "stable",

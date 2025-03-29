@@ -82,5 +82,5 @@ return [
      | path will be in src folder, only load if it in src
      |--------------------------------------------------------------------------
     */
-    'preloads' => [],
+    'preloads' => ['functions.php'],
 ];

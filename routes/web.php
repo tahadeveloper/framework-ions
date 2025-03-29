@@ -3,7 +3,14 @@
 use Ions\Bundles\Route;
 use Ions\Support\Request;
 
-Route::get('/', 'Home::index');
+Route::get(
+    '/{_method}',
+    'IndexController@index',
+    ['_method' => 'index'],
+    name: 'site.index',
+    wheres: ['_method' => 'index'],
+);
+
 Route::match(['get', 'post'], '/index', static function (Request $request) {
     appSetLocale('ar');
     render('re.html.twig', ['name' => 'ions', 'text' => $request->get('text')]);
